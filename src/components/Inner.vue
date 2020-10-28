@@ -20,14 +20,26 @@
 </template>
 
 <script>
-import data from "../data.json";
+import useRepos from "./composables/useRepositories";
+import useFiltration from "./composables/useFiltration";
+
+import { ref, onMounted } from "vue";
+
 export default {
   name: "Inner",
   data() {
     return {
-      repos: [],
-      processedRepos: [],
+      // repos: [],
+      // processedRepos: [],
       filter: "all",
+    };
+  },
+  setup() {
+    const reposComposable = useRepos();
+
+    return {
+      repos: reposComposable.repos,
+      ...useFiltration(reposComposable.repos)
     };
   },
   computed: {
@@ -79,7 +91,7 @@ export default {
     },
   },
   mounted() {
-    this.repos = data;
+    // this.repos = data;
     this.processedRepos = this.flatenTheRepos(this.repos);
   },
 };
