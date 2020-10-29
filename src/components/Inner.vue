@@ -20,15 +20,21 @@
 </template>
 
 <script>
-import data from "../data.json";
+import useRepos from "./composables/useRepos";
+
 export default {
   name: "Inner",
   data() {
     return {
-      repos: [],
       processedRepos: [],
       filter: "all",
     };
+  },
+  setup() {
+
+    return {
+      ...useRepos()
+    }
   },
   computed: {
     categorisedRepos() {
@@ -79,7 +85,6 @@ export default {
     },
   },
   mounted() {
-    this.repos = data;
     this.processedRepos = this.flatenTheRepos(this.repos);
   },
 };
