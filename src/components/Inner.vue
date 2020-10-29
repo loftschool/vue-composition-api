@@ -12,7 +12,7 @@
     <button @click="filterItems">filter</button>
   </div>
 
-  <ul class="respos">
+  <ul class="repos">
     <li v-for="repo in processedRepos">
       <span> {{ repo.full_name }} </span> <b v-if="repo.private">(private)</b>
     </li>
@@ -67,18 +67,15 @@ export default {
     },
   },
   watch: {
-    filter(value) {
-      switch (value) {
-        case "all":
-          this.processedRepos = this.flatenTheRepos(this.repos);
-          break;
-        default:
-          this.processedRepos = this.categorisedRepos;
-      }
-    },
-  },
-  mounted() {
-    this.processedRepos = this.flatenTheRepos(this.repos);
-  },
+    // filter(value) {
+    //   switch (value) {
+    //     case "all":
+    //       this.processedRepos = this.flatenTheRepos(this.repos);
+    //       break;
+    //     default:
+    //       this.processedRepos = this.categorisedRepos;
+    //   }
+    // },
+  }
 };
 </script>
