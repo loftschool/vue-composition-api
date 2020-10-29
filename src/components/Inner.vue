@@ -12,6 +12,8 @@
     <button @click="filterItems">filter</button>
   </div>
 
+<!--  <pre>{{ processedRepos }}</pre>-->
+
   <ul class="repos">
     <li v-for="repo in processedRepos">
       <span> {{ repo.full_name }} </span> <b v-if="repo.private">(private)</b>
@@ -39,21 +41,6 @@ export default {
     };
   },
   methods: {
-    flatenTheRepos(reposCollection) {
-      const result = [];
-      for (const reposCategory in reposCollection) {
-        result.push(reposCollection[reposCategory].items);
-      }
-      return result.flat();
-    },
-    filterItems() {
-      this.processedRepos = this.categorisedRepos.filter(
-        (repo) => repo.private
-      );
-    },
-    showUnProcessedItems() {
-      this.processedRepos = this.categorisedRepos;
-    },
     sortItems() {
       this.processedRepos = [...this.categorisedRepos].sort((a, b) => {
         if (a.forks > b.forks) {
@@ -66,16 +53,5 @@ export default {
       });
     },
   },
-  watch: {
-    // filter(value) {
-    //   switch (value) {
-    //     case "all":
-    //       this.processedRepos = this.flatenTheRepos(this.repos);
-    //       break;
-    //     default:
-    //       this.processedRepos = this.categorisedRepos;
-    //   }
-    // },
-  }
 };
 </script>
