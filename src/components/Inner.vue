@@ -21,31 +21,24 @@
 
 <script>
 import useRepos from "./composables/useRepos";
+import useFiltering from "./composables/useFiltering";
 
 export default {
   name: "Inner",
   data() {
     return {
       processedRepos: [],
-      filter: "all",
     };
   },
   setup() {
+    const { repos } = useRepos();
 
     return {
-      ...useRepos()
-    }
-  },
-  computed: {
-    categorisedRepos() {
-      return this.repos[this.filter].items;
-    },
+      repos,
+      ...useFiltering(repos),
+    };
   },
   methods: {
-    changeFilter(filterName) {
-      this.filter = filterName;
-    },
-
     flatenTheRepos(reposCollection) {
       const result = [];
       for (const reposCategory in reposCollection) {
