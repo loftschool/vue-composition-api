@@ -12,8 +12,6 @@
     <button @click="filterItems">filter</button>
   </div>
 
-<!--  <pre>{{ processedRepos }}</pre>-->
-
   <ul class="repos">
     <li v-for="repo in processedRepos">
       <span> {{ repo.full_name }} </span> <b v-if="repo.private">(private)</b>
@@ -24,34 +22,33 @@
 <script>
 import useRepos from "./composables/useRepos";
 import useFiltering from "./composables/useFiltering";
+import useSorting from "./composables/useSorting";
 
 export default {
   name: "Inner",
-  data() {
-    return {
-      processedRepos: [],
-    };
-  },
   setup() {
     const { repos } = useRepos();
 
+    const {
+      filter,
+      categorisedRepos,
+      changeFilter,
+      filterItems,
+      processedRepos,
+      showUnProcessedItems,
+    } = useFiltering(repos);
+
+    const { sortItems } = useSorting(processedRepos, categorisedRepos);
+
     return {
       repos,
-      ...useFiltering(repos),
+      filter,
+      changeFilter,
+      processedRepos,
+      showUnProcessedItems,
+      filterItems,
+      sortItems,
     };
-  },
-  methods: {
-    sortItems() {
-      this.processedRepos = [...this.categorisedRepos].sort((a, b) => {
-        if (a.forks > b.forks) {
-          return -1;
-        }
-        if (a.forks < b.forks) {
-          return 1;
-        }
-        return 0;
-      });
-    },
   },
 };
 </script>

@@ -32,7 +32,6 @@ export default (repos) => {
 
   onMounted(() => {
     processedRepos.value = flatenTheRepos(repos);
-    console.log('mounted');
   });
 
 
@@ -50,7 +49,6 @@ export default (repos) => {
     filter,
     categorisedRepos,
     changeFilter,
-    flatenTheRepos,
     processedRepos,
     filterItems,
     showUnProcessedItems
