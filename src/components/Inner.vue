@@ -12,34 +12,23 @@
     <button @click="filterItems">filter</button>
   </div>
 
-  <ul class="respos">
-    <li v-for="repo in processedRepos">
+  <ul class="repos">
+    <li v-for="repo in processedRepos" :key="repo.id">
       <span> {{ repo.full_name }} </span> <b v-if="repo.private">(private)</b>
     </li>
   </ul>
 </template>
 
 <script>
-import useRepos from "./composables/useRepositories";
-import useFiltration from "./composables/useFiltration";
-
-import { ref, onMounted } from "vue";
+import data from "../data.json";
 
 export default {
   name: "Inner",
   data() {
     return {
-      // repos: [],
-      // processedRepos: [],
+      repos: data,
+      processedRepos: [],
       filter: "all",
-    };
-  },
-  setup() {
-    const reposComposable = useRepos();
-
-    return {
-      repos: reposComposable.repos,
-      ...useFiltration(reposComposable.repos)
     };
   },
   computed: {
@@ -91,7 +80,6 @@ export default {
     },
   },
   mounted() {
-    // this.repos = data;
     this.processedRepos = this.flatenTheRepos(this.repos);
   },
 };
